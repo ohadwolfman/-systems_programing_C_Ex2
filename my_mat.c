@@ -1,92 +1,56 @@
 #include <stdio.h>
-#include <math.h>
 #include <limits.h>
+#include "my_mat.h"
 
-// Number of vertices in the graph
-#define V 9
-
+#define V 10
 
 void createMatrix(int matrix[V][V]){
 	int x;
-	for(int i = 0; i < V; i++){
-		for(int j = 0; j < V; j++){
+	for(int i = 0; i < 10; i++){
+		for(int j = 0; j < 10; j++){
 			scanf("%d", &x);
 			matrix[i][j] = x;
 		}
 	}
 }
 
-/*int isConected(int i, int j){
-int k=0;
-while(k<10){
-
-}
-
-    if(matrix[i][j] != 0){
-        return true;
-    }
-    return false;
-}
-
-int shortestPath(int i, int j){
-	return 	dijkstra(matrix, i, j);
-}*/
-
-
-// A utility function to find the vertex with minimum distance value, from
-// the set of vertices not yet included in shortest path tree
-int minDistance(int dist[], int visited[])
-{
-	// Initialize min value
-	int min = INT_MAX, min_index;
-
-	for (int v = 0; v < V; v++)
-		if (visited[v] == 0 && dist[v] <= min)
-			min = dist[v], min_index = v;
-
-	return min_index;
-}
-
-// Function that implements Dijkstra's single source shortest path algorithm
-// for a graph represented using adjacency matrix representation
-int dijkstra(int graph[V][V], int src, int j)
-{
-	int dist[V]; // dist[i] will hold the shortest distance from src to i
-
-	int visited[V]; // visited[i] will be true if vertex i is included in shortest
-	// path tree or shortest distance from src to i is finalized
-
-	// Initialize all distances as INFINITE and stpSet[] as false
-	for (int i = 0; i < V; i++)
-		dist[i] = INT_MAX, visited[i] = 0;
-
-	// Distance of source vertex from itself is always 0
-	dist[src] = 0;
-
-	// Find shortest path for all vertices
-	for (int count = 0; count < V - 1; count++) {
-		// Pick the minimum distance vertex from the set of vertices not
-		// yet processed. u is always equal to src in the first iteration.
-		int u = minDistance(dist, visited);
-
-		// Mark the picked vertex as processed
-		visited[u] = 1;
-
-		// Update dist value of the adjacent vertices of the picked vertex.
-		for (int v = 0; v < V; v++)
-
-			// Conditions for updating dist[v]:
-			// 1. v isn't in visited,
-			// 2. there is an edge from u to v,
-			// 3. total weight of path from src to v through u is smaller than current value of dist[v]
-			if (visited[v]==0 && (graph[u][v]!=0) && dist[u] != INT_MAX && dist[u] + graph[u][v] < dist[v]){
-				dist[v] = dist[u] + graph[u][v];
+int shortestPath(int a, int b, int matrix[V][V]){
+		
+	// create distance matrix
+	int dis[V][V];
+	
+	// change all non-exsisting edges to be infinity
+	for(int i = 0; i < V; i++){
+		for (int j = 0; j < V; j++){
+			if((i != j) && (matrix[i][j] == 0)){
+				dis[i][j] = INT_MAX;
+			} else {
+				dis[i][j] = matrix[i][j];
 			}
+		}
 	}
-	if(dist[j]!=0){
-		return dist[j];
+	
+	// update distance from node i to node j:
+	// if there is an edge from i to j, and it has a smaller value than going from i to j through k (assuming that exsists as well)
+	// keep that value; otherwise, update the value in dis[i][j] to be the route through k.
+	for(int k = 0; k < V; k++){
+		for(int i = 0; i < V; i++){
+			for(int j = 0; j < V; j++){
+				if((dis[i][k] != INT_MAX) && (dis[k][j] != INT_MAX) &&
+				(dis[i][j] > dis[i][k] + dis[k][j])){
+	    				dis[i][j] = dis[i][k] + dis[k][j];
+    			}
+			}
+		}
 	}
-	else{
-		return -1;
+	return (((dis[a][b] == INT_MAX) || (dis[a][b] == 0)) ? -1 : dis[a][b]);
+}
+
+void isConnected(int a, int b, int matrix[V][V]){
+	int dist = shortestPath(a, b, matrix);
+	if(dist != -1){
+		printf("True");
+	} else {
+		printf("False");
 	}
 }
