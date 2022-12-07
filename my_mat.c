@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <limits.h>
 #include <math.h>
 #include "my_mat.h"
 
@@ -50,13 +49,12 @@ void isConnected(){
 
 void shortestPath(){
 	int i,j;
-	if(scanf("%d%d",&i,&j) != EOF);
+	scanf("%d%d",&i,&j);
 	if(matrix[i][j]!=0){
-		printf("%d", matrix[i][j]);
+		printf("%d\n", matrix[i][j]);
 	}
 	else{
-		printf("-1");
-		printf("\n");
+		printf("-1\n");
 	}
 	return;
 }
