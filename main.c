@@ -6,13 +6,12 @@
 int main() {
     char function;
     while(scanf("%c",&function)!=EOF && function!='D'){
-
         if(function=='A'){
 			createMatrix();
 		}
         
         if(function=='B') {
-			isConnect();
+			isConnected();
 		}
         
         if(function=='C') {
