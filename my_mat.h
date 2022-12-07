@@ -1,10 +1,7 @@
-#ifndef _MY_MAT_H_
-#define _MY_MAT_H_
-
-#define V 10
+#ifndef MY_MAT_H
+#define MY_MAT_H
 void createMatrix();
 void floydWarshall()
 void isConnected();
-int shortestPath();
-	
+void shortestPath();
 #endif

@@ -3,22 +3,23 @@
 #include "my_mat.h"
 
 #define V 10
-
-// create distance matrix
-int dis[V][V];
+int matrix[V][V] = {00};
 
 void floydWarshall(){
+	// create distances matrix for Floyd-Warshell algorithm
+	//int dis[V][V] = {0};
+
 	// update distance from node i to node j:
 	// if there is an edge from i to j, and it has a smaller value than going from i to j through k (assuming that exsists as well)
 	// keep that value; otherwise, update the value in dis[i][j] to be the route through k.
 	for(int k = 0; k < V; k++){
 		for(int i = 0; i < V; i++){
 			for(int j = 0; j < V; j++){
-				if((dis[i][j] != 0) && (dis[i][k] != 0) && (dis[k][j]!=0)){
-					dis[i][j] = fmin(dis[i][j], dis[i][k]+dis[k][j])
+				if((matrix[i][j] != 0) && (matrix[i][k] != 0) && (matrix[k][j]!=0)){
+					matrix[i][j] = fmin(matrix[i][j], matrix[i][k]+matrix[k][j])
 				}
-				if(i!=j && dis[i][j]==0 && dis[i][k]!=0 && dis[k][j]!=0){
-					dis[i][j] = dis[i][k]+dis[k][j]
+				if(i!=j && matrix[i][j]==0 && matrix[i][k]!=0 && matrix[k][j]!=0){
+					matrix[i][j] = matrix[i][k]+matrix[k][j]
 				}
 			}
 		}
@@ -30,27 +31,28 @@ void createMatrix(){
 	int x;
 	for(int i = 0; i < 10; i++){
 		for(int j = 0; j < 10; j++){
-			scanf("%d", &x);
-			matrix[i][j] = x;
+			scanf("%d", &matrix[i][j]);
 		}
 	}
 	floydWarshall();
 }
 
 void isConnected(int a, int b){
-	if(dis[i][j] != 0){
+	if(matrix[i][j] != 0){
 		printf("True");
 	} else {
 		printf("False");
 	}
+	printf("\n");
 }
 
-int shortestPath(int a, int b){
-	if(dis[i][j]!=0){
-		return dis[i][j];
+void shortestPath(int a, int b){
+	if(matrix[i][j]!=0){
+		printf("%d", matrix[i][j]);
 	}
 	else{
-		return -1;
+		printf("-1");
+		printf("\n");
 	}
+	return;
 }
-
