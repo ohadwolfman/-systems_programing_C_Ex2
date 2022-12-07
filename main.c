@@ -13,8 +13,7 @@ int main() {
 		}
         
         if(function=='B') {
-			scanf("%d%d",&a,&b);
-			isConnect(a,b);
+			isConnect();
 		}
         
         if(function=='C') {

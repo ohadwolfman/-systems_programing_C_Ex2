@@ -3,7 +3,7 @@
 #include "my_mat.h"
 
 #define V 10
-int matrix[V][V] = {00};
+int matrix[V][V] = {0};
 
 void floydWarshall(){
 	// create distances matrix for Floyd-Warshell algorithm
@@ -37,7 +37,9 @@ void createMatrix(){
 	floydWarshall();
 }
 
-void isConnected(int a, int b){
+void isConnected(){
+	int i,j;
+	if(scanf("%d%d",&i,&j) != EOF);
 	if(matrix[i][j] != 0){
 		printf("True");
 	} else {
@@ -46,7 +48,9 @@ void isConnected(int a, int b){
 	printf("\n");
 }
 
-void shortestPath(int a, int b){
+void shortestPath(){
+	int i,j;
+	if(scanf("%d%d",&i,&j) != EOF);
 	if(matrix[i][j]!=0){
 		printf("%d", matrix[i][j]);
 	}
