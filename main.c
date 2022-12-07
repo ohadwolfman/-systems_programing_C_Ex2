@@ -4,8 +4,7 @@
 #define V 10
 
 int main() {
-    char function " ";
-	int a=0, b=0;
+    char function;
     while(scanf("%c",&function)!=EOF && function!='D'){
 
         if(function=='A'){
@@ -17,7 +16,6 @@ int main() {
 		}
         
         if(function=='C') {
-			scanf("%d%d",&a,&b);
 			shortestPath();
 		}
     }      
