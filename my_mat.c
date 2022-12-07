@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <limits.h>
+#include <math.h>
 #include "my_mat.h"
 
 #define V 10
@@ -16,10 +17,10 @@ void floydWarshall(){
 		for(int i = 0; i < V; i++){
 			for(int j = 0; j < V; j++){
 				if((matrix[i][j] != 0) && (matrix[i][k] != 0) && (matrix[k][j]!=0)){
-					matrix[i][j] = fmin(matrix[i][j], matrix[i][k]+matrix[k][j])
+					matrix[i][j] = fmin(matrix[i][j], matrix[i][k]+matrix[k][j]);
 				}
 				if(i!=j && matrix[i][j]==0 && matrix[i][k]!=0 && matrix[k][j]!=0){
-					matrix[i][j] = matrix[i][k]+matrix[k][j]
+					matrix[i][j] = matrix[i][k]+matrix[k][j];
 				}
 			}
 		}
