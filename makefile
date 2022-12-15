@@ -34,10 +34,14 @@ libclassrec.a: $(BASIC).o $(ACR).o
 	
 recursived: $(BASIC).o $(ACR).o
 	$(CC) $(CFLAGS) -fPIC -shared -o libclassrec.so $^
+	export LD_LIBRARY_PATH=.:$$LD_LIBRARY_PATH
+
 
 loopd:libclassloops.so	
 libclassloops.so: $(BASIC).o $(ACL).o
 	$(CC) $(CFLAGS) -fPIC -shared -o libclassloops.so $^
+	export LD_LIBRARY_PATH=.:$$LD_LIBRARY_PATH
+
 	
 mains: main.o libclassrec.a
 	$(CC) $(CFLAGS) -o mains main.o -L. -libclassloops -lm
