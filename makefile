@@ -1,58 +1,22 @@
 CC = gcc
-CFLAGS = -Wall -g
-.PHONY: loops recursives recursived loopd all clean
+AR = ar -rcs
+CFLAGS = -Wall -g 
 
-BASIC =  basicClassification
-ACL = advancedClassificationLoop
-ACR = advancedClassificationRecursion
-NC = NumClass
+.PHONY: clean all
+ 
 
+# Making the the Objects files
+main.o: main.c my_mat.h
+	$(CC) $(CFLAGS) -c main.c
 
-all: loops recursives loopd recursived mains maindloop maindrec
+my_mat.o: my_mat.c my_mat.h
+	$(CC) $(CFLAGS) -c my_mat.c 
 
+# Making the main file - this is the command that will run the program from 'all'
+connections: my_mat.o main.o
+	$(CC) $(CFLAGS) main.o my_mat.o -o connections -lm
 
-basicClassification.o: $(BASIC).c $(NC).h
-	$(CC) $(CFLAGS) -c $<
+all: connections
 
-advancedClassificationLoop.o: $(ACL).c $(NC).h
-	$(CC) $(CFLAGS) -c $<
-
-advancedClassificationRecursion.o: $(ACR).c $(NC).h
-	$(CC) $(CFLAGS) -c $<
-
-main.o: main.c $(NC).h
-	$(CC) $(CFLAGS) -c $<
-
-
-loops: libclassloops.a
-libclassloops.a: $(BASIC).o $(ACL).o
-	ar -rcu libclassloops.a $^
-
-recursives: libclassrec.a
-libclassrec.a: $(BASIC).o $(ACR).o
-	ar -rc libclassrec.a $^
-	
-recursived: $(BASIC).o $(ACR).o
-	$(CC) $(CFLAGS) -fPIC -shared -o libclassrec.so $^
-	export LD_LIBRARY_PATH=.:$$LD_LIBRARY_PATH
-
-
-loopd:libclassloops.so	
-libclassloops.so: $(BASIC).o $(ACL).o
-	$(CC) $(CFLAGS) -fPIC -shared -o libclassloops.so $^
-	export LD_LIBRARY_PATH=.:$$LD_LIBRARY_PATH
-
-	
-mains: main.o libclassrec.a
-	$(CC) $(CFLAGS) -o mains main.o -L. -libclassloops -lm
-	
-maindloop: main.o libclassloops.so
-	$(CC) $(CFLAGS) -o maindloop main.o -L. -libclassloops -lm
-	export LD_LIBRARY_PATH=.:$$LD_LIBRARY_PATH
-	
-maindrec: main.o libclassrec.so
-	$(CC) $(CFLAGS) -o maindrec main.o -L. -libclassloops -lm
-	export LD_LIBRARY_PATH=.:$$LD_LIBRARY_PATH
-	
 clean:
-	rm -f *.o *.so *.a mains maindloop maindrec
+	rm -f *.o *.a connections
